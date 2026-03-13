@@ -378,15 +378,18 @@ class ListmonkClient:
         name: str,
         body: str,
         type: str = "campaign",
-        is_default: bool = False
+        is_default: bool = False,
+        subject: str | None = None
     ) -> dict[str, Any]:
         """Create a new email template."""
-        data = {
+        data: dict[str, Any] = {
             "name": name,
             "body": body,
             "type": type,
             "is_default": is_default
         }
+        if subject is not None:
+            data["subject"] = subject
         return await self._request("POST", "/api/templates", json_data=data)
 
     async def update_template(

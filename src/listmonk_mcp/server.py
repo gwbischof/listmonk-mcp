@@ -934,7 +934,8 @@ async def create_template(
     name: str,
     body: str,
     type: str = "campaign",
-    is_default: bool = False
+    is_default: bool = False,
+    subject: str | None = None
 ) -> str:
     """
     Create a new email template.
@@ -944,6 +945,7 @@ async def create_template(
         body: Template HTML body content
         type: Template type (campaign, tx)
         is_default: Whether this is the default template
+        subject: Email subject line (required for tx templates)
     """
     async def _create_template_logic() -> str:
         client = get_client()
@@ -951,7 +953,8 @@ async def create_template(
             name=name,
             body=body,
             type=type,
-            is_default=is_default
+            is_default=is_default,
+            subject=subject
         )
 
         template_data = result.get("data", {})
